@@ -1,0 +1,45 @@
+---
+
+- name: Download GitLab Repo
+  get_url:
+    url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh
+    dest: /usr/src/gitlab.rpm.sh
+    mode: 0755
+    validate_certs: no
+    checksum: "md5:{{ gitlab_md5sum }}"
+
+- name: Install GitLab Repo
+  raw: /usr/src/gitlab.rpm.sh
+
+- name: Install GitLab
+  raw: >
+    sudo yum install gitlab-ce -y
+
+# Sometimes this fails out so we skip the failure
+- name: Initialize GitLab
+  command: >
+    gitlab-ctl reconfigure
+    creates=/var/opt/gitlab/bootstrapped
+  failed_when: false
+
+- name: Create GitLab SSL Directory
+  file:
+    path: /etc/gitlab/ssl
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Create self-signed certificate.
+  command: >
+    openssl req -new -nodes -x509 -subj "{{ gitlab_self_signed_cert_subj }}" -days 3650 -keyout {{ gitlab_ssl_certificate_key }} -out {{ gitlab_ssl_certificate }} -extensions v3_ca
+    creates={{ gitlab_ssl_certificate }}
+
+- name: Copy GitLab Configuration Template
+  template:
+    src: gitlab.rb.j2
+    dest: /etc/gitlab/gitlab.rb
+    owner: root
+    group: root
+    mode: 0600
+  notify: Restart GitLab

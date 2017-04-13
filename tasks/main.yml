@@ -1,0 +1,10 @@
+---
+# tasks file for OULibraries.gitlab
+
+- include: yum.yml
+  sudo: yes
+  tags: yum
+
+- include: install.yml
+  sudo: yes
+  tags: install

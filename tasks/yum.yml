@@ -1,0 +1,11 @@
+---
+
+- name: Install ntp, curl, and openssh-clients
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - ntp
+    - curl
+    - openssh-clients
+  notify: Start ntp
