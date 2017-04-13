@@ -1,0 +1,12 @@
+---
+# handlers file for OULibraries.gitlab
+
+- name: Start ntp
+  service:
+    name: ntpd
+    state: started
+
+- name: Restart GitLab
+  command: gitlab-ctl reconfigure
+
+
