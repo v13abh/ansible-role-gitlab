@@ -1,4 +1,4 @@
-# OULibraries.gitlab
+# v13abh.gitlab
 
 This role installs [GitLab Community Edition (CE)](https://gitlab.com/gitlab-org/gitlab-ce) on Centos7. Complete GitLab documentation can be found at https://docs.gitlab.com/ce/.
 
