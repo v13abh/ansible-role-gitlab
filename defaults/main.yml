@@ -1,0 +1,53 @@
+---
+# defaults file for OULibraries.gitlab
+
+# General config.
+gitlab_external_url: "https://gitlab/"
+gitlab_git_data_dir: "/var/opt/gitlab/git-data"
+gitlab_edition: "gitlab-ce"
+
+# SSL Configuration.
+gitlab_redirect_http_to_https: "true"
+gitlab_ssl_certificate: "/etc/gitlab/ssl/gitlab.crt"
+gitlab_ssl_certificate_key: "/etc/gitlab/ssl/gitlab.key"
+
+# SSL Self-signed Certificate Configuration.
+gitlab_create_self_signed_cert: "true"
+gitlab_self_signed_cert_subj: "/CN=gitlab"
+
+# LDAP Configuration.
+gitlab_ldap_enabled: "false"
+gitlab_ldap_host: "example.com"
+gitlab_ldap_port: "389"
+gitlab_ldap_uid: "sAMAccountName"
+gitlab_ldap_method: "plain"
+gitlab_ldap_bind_dn: "CN=Username,CN=Users,DC=example,DC=com"
+gitlab_ldap_password: "password"
+gitlab_ldap_base: "DC=example,DC=com"
+
+# Optional settings.
+gitlab_time_zone: "UTC"
+gitlab_backup_keep_time: "604800"
+
+# Postfix Email Configuration
+# Make sure gitlab_email_from and gitlab_email_reply_to in below section is set to a valid email or 
+# O365 will error out with "not allowed to send mail as"
+smtp_host: "smtp.example.com"
+smtp_port: "587"
+smtp_domain: "example.com"
+smtp_start_tls: "true"
+smtp_authuser: "username@example.com"
+smtp_authpassword: "example_password"
+ 
+# GitLab Email Configuration
+# We are using the Postfix-mta role for email. GitLab config needs to be set for localhost/localdomain.
+gitlab_email_enabled: "true"
+gitlab_email_host: "localhost"
+gitlab_email_port: "25"
+gitlab_email_domain: "localdomain"
+gitlab_email_authentication: "false"
+gitlab_email_starttls: "false"
+gitlab_email_from: "gitlab@example.com"
+gitlab_email_display_name: "GitLab"
+gitlab_email_reply_to: "gitlab@example.com"
+
